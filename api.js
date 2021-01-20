@@ -1,14 +1,27 @@
 const Entries = require('./entries')
+const autoCatch = require('./lib/auto-catch')
 
-module.exports = {
-    listEntries
-}
+module.exports = ({
+    listEntries,
+    getEntries
+})
 
 async function listEntries (req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    try {
-        res.json(await Entries.list())
-    } catch (e) {
-        res.status(500).json({ error: e.message })
-    }
+    const { offset = 0, limit = 25, tag } = req.query
+
+    const entries = await Entries.list({
+        offset: Number(offset),
+        limit: Number(limit),
+        tag
+    })
+    res.json(entries)
+}
+
+async function getEntries (req, res, next) {
+    const { id } = req.params
+
+    const entries = await Entries.get(id)
+    if (!entries) return next()
+
+    res.json(entries)
 }
