@@ -1,5 +1,6 @@
 const Entries = require('./models/entries')
 const autoCatch = require('./lib/auto-catch')
+const utils = require('./utils/utils')
 
 module.exports = autoCatch({
     listEntries,
@@ -45,6 +46,22 @@ async function updateEntries(req, res, next) {
 async function deleteEntries(req, res, next) {
     const { id } = req.params
 
-    await Entries.delete(id)
-    res.json({ success: true })
+    const check = await getEntry(id)
+    if (check) {
+        await Entries.delete(id)
+        res.json({ success: true })
+    }
+    res.json({message: 'Entry does not exist in file'})
+
+
+}
+
+const getEntry = async (id) => {
+    const data = await utils.read('entries', 'entries.json')
+    const entries = JSON.parse(data)
+
+    for (let i = 0; i < entries.length; i++) {
+        if (entries[i].id === id) return true
+    }
+    return null
 }

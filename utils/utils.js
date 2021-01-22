@@ -59,5 +59,5 @@ module.exports.delete = async (dir, file, id) => {
             return
         }
     }
-    return  new Error('Entry does not exist in file')
+    // return  new Error('Entry does not exist in file')
 }
