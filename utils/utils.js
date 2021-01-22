@@ -10,7 +10,7 @@ module.exports.read = async (dir, file) => {
 
 module.exports.write = async (dir, file, data) => {
     const fileData = JSON.parse(
-        await fs.readFile(`${basePath}${dir}/${file}`)
+        await fs.readFile(`${basePath}${dir}/${file}`, 'r+')
     )
     fileData.push(data)
     return await  fs.writeFile(
@@ -23,7 +23,7 @@ module.exports.update = async (dir, file, data, id) => {
 
 
     const fileData = JSON.parse(
-        await fs.readFile(`${basePath}${dir}/${file}`)
+        await fs.readFile(`${basePath}${dir}/${file}`, 'r+')
     )
     for (let i = 0; i < fileData.length; i++) {
         if (fileData[i].id === id) {
@@ -46,7 +46,7 @@ module.exports.update = async (dir, file, data, id) => {
 
 module.exports.delete = async (dir, file, id) => {
     const fileData = JSON.parse(
-        await fs.readFile(`${basePath}${dir}/${file}`)
+        await fs.readFile(`${basePath}${dir}/${file}`, 'r+')
     )
     for (let i = 0; i < fileData.length; i++) {
         if (fileData[i].id === id) {
