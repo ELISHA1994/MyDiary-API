@@ -1,9 +1,12 @@
-const Entries = require('./entries')
+const Entries = require('./models/entries')
 const autoCatch = require('./lib/auto-catch')
 
-module.exports = ({
+module.exports = autoCatch({
     listEntries,
-    getEntries
+    getEntries,
+    createEntries,
+    updateEntries,
+    deleteEntries
 })
 
 async function listEntries (req, res) {
@@ -20,8 +23,28 @@ async function listEntries (req, res) {
 async function getEntries (req, res, next) {
     const { id } = req.params
 
-    const entries = await Entries.get(id)
-    if (!entries) return next()
+    const entry = await Entries.get(id)
+    if (!entry) return next()
 
-    res.json(entries)
+    res.json(entry)
+}
+
+async function createEntries(req, res, next) {
+    // console.log('request body:', req.body)
+    const entry = await Entries.create(req.body)
+    res.json(entry)
+}
+
+async function updateEntries(req, res, next) {
+    const { id } = req.params
+
+    const entry = await Entries.edit(id, req.body)
+    res.json(entry)
+}
+
+async function deleteEntries(req, res, next) {
+    const { id } = req.params
+
+    await Entries.delete(id)
+    res.json({ success: true })
 }
