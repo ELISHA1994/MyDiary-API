@@ -1,6 +1,7 @@
 const Entries = require('./models/entries')
 const autoCatch = require('./lib/auto-catch')
 const utils = require('./utils/utils')
+const { v4: uuidv4 } = require('uuid')
 
 module.exports = autoCatch({
     listEntries,
@@ -30,10 +31,21 @@ async function getEntries (req, res, next) {
     res.json(entry)
 }
 
+// Entries - post
+// Required data: firstName, lastName, phone, password, tosAgreement
+// Optional data: none
 async function createEntries(req, res, next) {
-    // console.log('request body:', req.body)
-    const entry = await Entries.create(req.body)
+    const { title, description } = req.body
+    let fields = {}
+    fields.id = uuidv4()
+    fields.title = title
+    fields.description = description
+    fields.timestamp = Date.now()
+
+
+    const entry = await Entries.create(fields)
     res.json(entry)
+
 }
 
 async function updateEntries(req, res, next) {
@@ -46,22 +58,7 @@ async function updateEntries(req, res, next) {
 async function deleteEntries(req, res, next) {
     const { id } = req.params
 
-    const check = await getEntry(id)
-    if (check) {
-        await Entries.delete(id)
-        res.json({ success: true })
-    }
-    res.json({message: 'Entry does not exist in file'})
+    const result = await Entries.delete(id)
+    res.json(result)
 
-
-}
-
-const getEntry = async (id) => {
-    const data = await utils.read('entries', 'entries.json')
-    const entries = JSON.parse(data)
-
-    for (let i = 0; i < entries.length; i++) {
-        if (entries[i].id === id) return true
-    }
-    return null
 }

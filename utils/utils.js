@@ -10,7 +10,7 @@ module.exports.read = async (dir, file) => {
 
 module.exports.write = async (dir, file, data) => {
     const fileData = JSON.parse(
-        await fs.readFile(`${basePath}${dir}/${file}`, 'r+')
+        await fs.readFile(`${basePath}${dir}/${file}`)
     )
     fileData.push(data)
     return await  fs.writeFile(
@@ -23,7 +23,7 @@ module.exports.update = async (dir, file, data, id) => {
 
 
     const fileData = JSON.parse(
-        await fs.readFile(`${basePath}${dir}/${file}`, 'r+')
+        await fs.readFile(`${basePath}${dir}/${file}`)
     )
     for (let i = 0; i < fileData.length; i++) {
         if (fileData[i].id === id) {
@@ -41,12 +41,12 @@ module.exports.update = async (dir, file, data, id) => {
             return fileData[i]
         }
     }
-    return  new Error('Entry does not exist in file')
+    // return  new Error('Entry does not exist in file')
 }
 
 module.exports.delete = async (dir, file, id) => {
     const fileData = JSON.parse(
-        await fs.readFile(`${basePath}${dir}/${file}`, 'r+')
+        await fs.readFile(`${basePath}${dir}/${file}`)
     )
     for (let i = 0; i < fileData.length; i++) {
         if (fileData[i].id === id) {
@@ -59,5 +59,4 @@ module.exports.delete = async (dir, file, id) => {
             return
         }
     }
-    // return  new Error('Entry does not exist in file')
 }
