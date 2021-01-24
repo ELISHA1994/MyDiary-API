@@ -134,16 +134,30 @@ describe('Server', () => {
     *   Test the /DELETE/:id route
     **/
     describe('/DELETE/:id entry', () => {
-        it('should delete an entry given its id', (done) => {
-            const entryId = 'f591911a-9c92-414b-9e24-a8fdd09f4100'
+
+        it('should delete an entry given its ID', (done) => {
+            const entry = {
+                title: 'Testing',
+                description: 'Just some description'
+            }
             chai.request(API)
-                .delete(`/api/v1/entries/${entryId}`)
+                .post('/api/v1/entries')
+                .send(entry)
                 .end((err, res) => {
-                    res.should.have.status(200)
-                    res.body.should.be.a('object')
-                    res.body.should.have.property('message')
-                    res.body.message.should.be.eql('Entry deleted')
-                    done()
+                    if (res.should.have.status(200)) {
+                        const entryId = res.body.id
+                        chai.request(API)
+                            .delete(`/api/v1/entries/${entryId}`)
+                            .end((err, res) => {
+                                res.should.have.status(200)
+                                res.body.should.be.a('object')
+                                res.body.should.have.property('message')
+                                res.body.message.should.be.eql('Entry deleted')
+                            })
+                        done()
+                    } else {
+                        throw new Error(err)
+                    }
                 })
         })
 
