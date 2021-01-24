@@ -19,7 +19,7 @@ describe('Server', () => {
                 description: 'The Lords Day'
             }
             chai.request(API)
-                .post('/entries')
+                .post('/api/v1/entries')
                 .send(entry)
                 .end((err, res) => {
                     res.should.have.status(200)
@@ -35,7 +35,7 @@ describe('Server', () => {
         it('should not post a entry without all require fields', (done) => {
             const entry = {}
             chai.request(API)
-                .post('/entries')
+                .post('/api/v1/entries')
                 .send(entry)
                 .end((err, res) => {
                     res.should.have.status(200)
@@ -54,7 +54,7 @@ describe('Server', () => {
         it('should get all the entries', (done) => {
 
             chai.request(API)
-                .get('/entries')
+                .get('/api/v1/entries')
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.should.be.a('array')
@@ -65,7 +65,7 @@ describe('Server', () => {
 
         it('should NOT return all the entries', (done) => {
             chai.request(API)
-                .get('/entry')
+                .get('/api/v1/entry')
                 .end((err, res) => {
                     res.should.have.status(404)
                     done()
@@ -80,7 +80,7 @@ describe('Server', () => {
         it('should get an entry by id', (done) => {
             const entryId = 'trYl7JYATH0'
             chai.request(API)
-                .get(`/entries/${entryId}`)
+                .get(`/api/v1/entries/${entryId}`)
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.should.be.a('object')
@@ -95,7 +95,7 @@ describe('Server', () => {
         it('should not get entry without right Id', (done) => {
             const entryId = 'trYl7JYATH9'
             chai.request(API)
-                .get(`/entries/${entryId}`)
+                .get(`/api/v1/entries/${entryId}`)
                 .end((err, res) => {
                     res.should.have.status(404)
                     res.body.should.be.a('object')
@@ -111,13 +111,13 @@ describe('Server', () => {
     **/
     describe('/PUT/:id entry', () => {
         it('should update an entry given the Id', (done) => {
-            const entryId = 'trYl7JYATH1'
+            const entryId = 'trYl7JYATH0'
             const entry = {
                 title: 'Sunday',
-                description: 'The Lords Day'
+                description: 'The Lords Day is a Great Day'
             }
             chai.request(API)
-                .put(`/entries/${entryId}`)
+                .put(`/api/v1/entries/${entryId}`)
                 .send(entry)
                 .end((err, res) => {
                     res.should.have.status(200)
@@ -135,9 +135,9 @@ describe('Server', () => {
     **/
     describe('/DELETE/:id entry', () => {
         it('should delete an entry given its id', (done) => {
-            const entryId = '77080488-edf4-4a9e-8a01-6b867835ecfd'
+            const entryId = 'f591911a-9c92-414b-9e24-a8fdd09f4100'
             chai.request(API)
-                .delete(`/entries/${entryId}`)
+                .delete(`/api/v1/entries/${entryId}`)
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.should.be.a('object')
@@ -150,7 +150,7 @@ describe('Server', () => {
         it('should not delete an entry given wrong id', (done) => {
             const entryId ='cgcgcgj'
             chai.request(API)
-                .delete(`/entries/${entryId}`)
+                .delete(`/api/v1/entries/${entryId}`)
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.should.be.a('object')

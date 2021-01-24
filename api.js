@@ -50,8 +50,10 @@ async function createEntries(req, res, next) {
 
 async function updateEntries(req, res, next) {
     const { id } = req.params
+    let data = req.body
+    data.timestamp = Date.now()
 
-    const entry = await Entries.edit(id, req.body)
+    const entry = await Entries.edit(id, data)
     res.json(entry)
 }
 
