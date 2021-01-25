@@ -1,6 +1,5 @@
 const Entries = require('./models/entries')
 const autoCatch = require('./lib/auto-catch')
-const utils = require('./utils/utils')
 const { v4: uuidv4 } = require('uuid')
 
 module.exports = autoCatch({

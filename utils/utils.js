@@ -13,10 +13,11 @@ module.exports.write = async (dir, file, data) => {
         await fs.readFile(`${basePath}${dir}/${file}`)
     )
     fileData.push(data)
-    return await  fs.writeFile(
+    await  fs.writeFile(
         `${basePath}${dir}/${file}`,
         JSON.stringify(fileData, null, 2)
     )
+    return data
 }
 
 module.exports.update = async (dir, file, data, id) => {

@@ -6,12 +6,12 @@ module.exports.create = async (fields) => {
     const titlePT = typeof (fields.title) === 'string' && fields.title.length > 0
     const descriptionPT = typeof (fields.description) === 'string' && fields.description.length > 0
     if( idPT && titlePT && descriptionPT ) {
-        await utils.write(
+        // console.log(fields)
+        return await utils.write(
             'entries',
             'entries.json',
             fields
         )
-        return fields
     }
     return {
         error: 'Missing required fields'
