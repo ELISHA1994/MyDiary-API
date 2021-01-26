@@ -1,6 +1,13 @@
-import Entries from '../models/entries';
+import {
+    create,
+    list,
+    get,
+    edit,
+    destroy
+} from '../models/entries'
 import autoCatch from "../lib/auto-catch";
-const { v4: uuidv4 } = require('uuid');
+// const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
 
 export default autoCatch({
     listEntries,
@@ -13,7 +20,7 @@ export default autoCatch({
 async function listEntries (req, res) {
     const { offset = 0, limit = 25, tag } = req.query
 
-    const entries = await Entries.list({
+    const entries = await list({
         offset: Number(offset),
         limit: Number(limit),
         tag
@@ -24,7 +31,7 @@ async function listEntries (req, res) {
 async function getEntries (req, res, next) {
     const { id } = req.params
 
-    const entry = await Entries.get(id)
+    const entry = await get(id)
     if (!entry) return next()
 
     res.json(entry)
@@ -42,7 +49,7 @@ async function createEntries(req, res, next) {
     fields.timestamp = Date.now()
 
 
-    const entry = await Entries.create(fields)
+    const entry = await create(fields)
     res.json(entry)
 
 }
@@ -52,14 +59,14 @@ async function updateEntries(req, res, next) {
     let data = req.body
     data.timestamp = Date.now()
 
-    const entry = await Entries.edit(id, data)
+    const entry = await edit(id, data)
     res.json(entry)
 }
 
 async function deleteEntries(req, res, next) {
     const { id } = req.params
 
-    const result = await Entries.destroy(id)
+    const result = await destroy(id)
     res.json(result)
 
 }

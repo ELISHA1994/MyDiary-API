@@ -2,6 +2,7 @@
   "dependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
@@ -32,9 +33,8 @@
     "transpile": "babel ./server --out-dir dist-server",
     "clean": "rimraf dist-server",
     "watch:dev": "nodemon",
-    "test": "NODE_ENV=test mocha --timeout 10000 ./dist-server **/*.test.js",
-    "test-setup": "npm-run-all build test",
-    "test-watch": "nodemon --exec \"yarn test-setup\""
+    "test": "NODE_ENV=test mocha --require @babel/register --timeout 10000 ./test **/*.test.js",
+    "test-watch": "nodemon --exec \"yarn test\""
   },
   "babel": {
     "presets": [

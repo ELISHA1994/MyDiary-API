@@ -5,18 +5,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _entries = _interopRequireDefault(require("../models/entries"));
+var _entries = require("../models/entries");
 
 var _autoCatch = _interopRequireDefault(require("../lib/auto-catch"));
+
+var _uuid = require("uuid");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-var _require = require('uuid'),
-    uuidv4 = _require.v4;
 
 var _default = (0, _autoCatch["default"])({
   listEntries: listEntries,
@@ -42,7 +41,7 @@ function _listEntries() {
           case 0:
             _req$query = req.query, _req$query$offset = _req$query.offset, offset = _req$query$offset === void 0 ? 0 : _req$query$offset, _req$query$limit = _req$query.limit, limit = _req$query$limit === void 0 ? 25 : _req$query$limit, tag = _req$query.tag;
             _context.next = 3;
-            return _entries["default"].list({
+            return (0, _entries.list)({
               offset: Number(offset),
               limit: Number(limit),
               tag: tag
@@ -78,7 +77,7 @@ function _getEntries() {
           case 0:
             id = req.params.id;
             _context2.next = 3;
-            return _entries["default"].get(id);
+            return (0, _entries.get)(id);
 
           case 3:
             entry = _context2.sent;
@@ -117,12 +116,12 @@ function _createEntries() {
           case 0:
             _req$body = req.body, title = _req$body.title, description = _req$body.description;
             fields = {};
-            fields.id = uuidv4();
+            fields.id = (0, _uuid.v4)();
             fields.title = title;
             fields.description = description;
             fields.timestamp = Date.now();
             _context3.next = 8;
-            return _entries["default"].create(fields);
+            return (0, _entries.create)(fields);
 
           case 8:
             entry = _context3.sent;
@@ -153,7 +152,7 @@ function _updateEntries() {
             data = req.body;
             data.timestamp = Date.now();
             _context4.next = 5;
-            return _entries["default"].edit(id, data);
+            return (0, _entries.edit)(id, data);
 
           case 5:
             entry = _context4.sent;
@@ -182,7 +181,7 @@ function _deleteEntries() {
           case 0:
             id = req.params.id;
             _context5.next = 3;
-            return _entries["default"].destroy(id);
+            return (0, _entries.destroy)(id);
 
           case 3:
             result = _context5.sent;

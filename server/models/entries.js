@@ -2,13 +2,13 @@ import 'regenerator-runtime/runtime'
 const helpers = require('../../helpers/helpers')
 
 export default {
-    create,
-    list,
-    get,
-    edit,
+    // create,
+    // list,
+    // get,
+    // edit,
     destroy
 }
-async function create(fields) {
+export async function create(fields) {
     // Check that all required field are filled out
     const idPT = typeof (fields.id) === 'string' && fields.id.length > 0
     const titlePT = typeof (fields.title) === 'string' && fields.title.length > 0
@@ -26,7 +26,7 @@ async function create(fields) {
     }
 }
 
-async function list(opts = {}) {
+export async function list(opts = {}) {
     const { offset = 0, limit = 25, tag } = opts
     const data = await helpers.read('entries', 'entries.json')
     return JSON.parse(data)
@@ -34,7 +34,7 @@ async function list(opts = {}) {
         .slice(offset, offset + limit)
 }
 
-async function get(id) {
+export async function get(id) {
 
     const data = await helpers.read('entries', 'entries.json')
     const entries = JSON.parse(data)
@@ -46,7 +46,7 @@ async function get(id) {
 
 }
 
-async function edit(id, change) {
+export async function edit(id, change) {
     const entry = await helpers.update(
         'entries',
         'entries.json',
@@ -56,7 +56,7 @@ async function edit(id, change) {
     return entry
 }
 
-async function destroy (id) {
+export async function destroy (id) {
     const check = await getEntry(id)
 
     if (check) {

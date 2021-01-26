@@ -37,11 +37,11 @@ app.use(_express["default"].urlencoded({
 app.use((0, _cookieParser["default"])());
 app.use(_express["default"]["static"](_path["default"].join(__dirname, '../public'))); // App routes
 
-app.post('api/v1/entries', _api["default"].createEntries);
+app.post('/api/v1/entries', _api["default"].createEntries);
 app.get('/api/v1/entries', _api["default"].listEntries);
-app.get('api/v1/entries/:id', _api["default"].getEntries);
-app.put('api/v1/entries/:id', _api["default"].updateEntries);
-app["delete"]('api/v1/entries/:id', _api["default"].deleteEntries);
+app.get('/api/v1/entries/:id', _api["default"].getEntries);
+app.put('/api/v1/entries/:id', _api["default"].updateEntries);
+app["delete"]('/api/v1/entries/:id', _api["default"].deleteEntries);
 app.use(_middlewares["default"].handleError);
 app.use(_middlewares["default"].notFound);
 app.listen(port, function () {

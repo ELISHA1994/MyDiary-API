@@ -3,6 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.create = create;
+exports.list = list;
+exports.get = get;
+exports.edit = edit;
+exports.destroy = destroy;
 exports["default"] = void 0;
 
 require("regenerator-runtime/runtime");
@@ -14,10 +19,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var helpers = require('../../helpers/helpers');
 
 var _default = {
-  create: create,
-  list: list,
-  get: get,
-  edit: edit,
+  // create,
+  // list,
+  // get,
+  // edit,
   destroy: destroy
 };
 exports["default"] = _default;

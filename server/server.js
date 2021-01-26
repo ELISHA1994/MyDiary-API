@@ -24,11 +24,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 
 // App routes
-app.post('api/v1/entries', api.createEntries);
+app.post('/api/v1/entries', api.createEntries);
 app.get('/api/v1/entries', api.listEntries);
-app.get('api/v1/entries/:id', api.getEntries);
-app.put('api/v1/entries/:id', api.updateEntries);
-app.delete('api/v1/entries/:id', api.deleteEntries);
+app.get('/api/v1/entries/:id', api.getEntries);
+app.put('/api/v1/entries/:id', api.updateEntries);
+app.delete('/api/v1/entries/:id', api.deleteEntries);
 
 app.use(middleware.handleError)
 app.use(middleware.notFound)
