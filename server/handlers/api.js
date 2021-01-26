@@ -1,8 +1,8 @@
-const Entries = require('./models/entries')
-const autoCatch = require('./lib/auto-catch')
-const { v4: uuidv4 } = require('uuid')
+import Entries from '../models/entries';
+import autoCatch from "../lib/auto-catch";
+const { v4: uuidv4 } = require('uuid');
 
-module.exports = autoCatch({
+export default autoCatch({
     listEntries,
     getEntries,
     createEntries,
@@ -59,7 +59,7 @@ async function updateEntries(req, res, next) {
 async function deleteEntries(req, res, next) {
     const { id } = req.params
 
-    const result = await Entries.delete(id)
+    const result = await Entries.destroy(id)
     res.json(result)
 
 }

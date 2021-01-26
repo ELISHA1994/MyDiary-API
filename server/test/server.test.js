@@ -1,7 +1,9 @@
 // Require the dev-dependencies
+import 'regenerator-runtime/runtime'
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const app = require('../server')
+// const server = require('../server/bin/www')
+const app = require('../../dist-server/server')
 
 // Assertion
 chai.should()

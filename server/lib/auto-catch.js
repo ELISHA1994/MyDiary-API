@@ -1,4 +1,4 @@
-module.exports = function autoCatch (handlers) {
+export default function autoCatch (handlers) {
     return Object.keys(handlers).reduce((autoHandlers, key) => {
         const handler = handlers[key]
         autoHandlers[key] = (req, res, next) =>

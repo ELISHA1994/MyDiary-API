@@ -1,8 +1,18 @@
 {
   "dependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
     "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
+    "debug": "~2.6.9",
     "express": "^4.17.1",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "util-promisifyall": "^1.0.6",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -14,8 +24,29 @@
     "supertest": "^6.1.1"
   },
   "scripts": {
-    "dev": "nodemon server.js",
-    "test": "mocha --parallel --timeout 10000 **/*.test.js",
-    "test-watch": "nodemon --exec \"yarn test\""
+    "start": "yarn run prod",
+    "build": "npm-run-all clean transpile",
+    "server": "node ./dist-server/server",
+    "dev": "NODE_ENV=development npm-run-all build server",
+    "prod": "NODE_ENV=production npm-run-all build server",
+    "transpile": "babel ./server --out-dir dist-server",
+    "clean": "rimraf dist-server",
+    "watch:dev": "nodemon",
+    "test": "NODE_ENV=test mocha --timeout 10000 ./dist-server **/*.test.js",
+    "test-setup": "npm-run-all build test",
+    "test-watch": "nodemon --exec \"yarn test-setup\""
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "nodemonConfig": {
+    "exec": "yarn run dev",
+    "watch": [
+      "server/*",
+      "public/*",
+      "test/*"
+    ]
   }
 }
