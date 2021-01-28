@@ -16,20 +16,30 @@ describe('Server', () => {
     describe('/POST entries', () => {
         it('should post entries', (done) => {
             const entry = {
-                title: 'Sunday',
-                description: 'The Lords Day'
+                title: 'Mayday',
+                description: 'A life or death experience'
             }
             chai.request(API)
                 .post('/api/v1/entries')
                 .send(entry)
                 .end((err, res) => {
-                    res.should.have.status(200)
-                    res.body.should.be.a('object')
-                    res.body.should.have.property('id')
-                    res.body.should.have.property('title').eql('Sunday')
-                    res.body.should.have.property('description')
-                    res.body.should.have.property('timestamp')
-                    done()
+                    if (res.should.have.status(200)) {
+                        res.should.have.status(200)
+                        res.body.should.be.a('object')
+                        res.body.should.have.property('id')
+                        res.body.should.have.property('title').eql('Mayday')
+                        res.body.should.have.property('description')
+                        res.body.should.have.property('timestamp')
+                        // delete the file created after the test
+                        const entryId = res.body.id
+                        console.log(entryId)
+                        chai.request(API)
+                            .delete(`/api/v1/entries/${entryId}`)
+                            .end((err, res) => {
+                                res.should.have.status(200)
+                            })
+                        done()
+                    }
                 })
         })
 

@@ -1,13 +1,6 @@
 import 'regenerator-runtime/runtime'
 const helpers = require('../../helpers/helpers')
 
-export default {
-    // create,
-    // list,
-    // get,
-    // edit,
-    destroy
-}
 export async function create(fields) {
     // Check that all required field are filled out
     const idPT = typeof (fields.id) === 'string' && fields.id.length > 0

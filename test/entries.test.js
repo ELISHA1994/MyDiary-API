@@ -2,11 +2,8 @@ import 'regenerator-runtime/runtime'
 import expect from 'expect'
 import rewire from 'rewire'
 
-
-const entries = require('../server/models/entries')
 const entriesRewire = rewire('../server/models/entries')
-// const entriesRewire = rewire('../dist-server/models/entries')
-// require('../dist-server/models/entries')
+
 
 describe('Entries', () => {
     describe('create', () => {

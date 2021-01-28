@@ -4,9 +4,8 @@ import {
     get,
     edit,
     destroy
-} from '../models/entries'
+} from '../models/entries';
 import autoCatch from "../lib/auto-catch";
-// const { v4: uuidv4 } = require('uuid');
 import { v4 as uuidv4 } from 'uuid';
 
 export default autoCatch({
@@ -15,7 +14,7 @@ export default autoCatch({
     createEntries,
     updateEntries,
     deleteEntries
-})
+});
 
 async function listEntries (req, res) {
     const { offset = 0, limit = 25, tag } = req.query
