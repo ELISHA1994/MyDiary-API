@@ -14,7 +14,9 @@ const port = process.env.NODE_ENV === 'test' ? '1337' : process.env.PORT || '300
 const app = express()
 
 // middlewares
-app.use(logger('dev'));
+if (process.env.NODE_ENV !== 'test') {
+    app.use(logger('dev'));
+}
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
